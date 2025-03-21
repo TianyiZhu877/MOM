@@ -18,7 +18,7 @@ def get_avg_mem_use_ratio(data, ref):
 #     return np.mean(data[3])
 
 
-def context_plot(data, dims, x_metrix = 'Context Length', y_metrix = 'Peak Memory', title=None, x_title = None, y_title = None, x_lim = None, y_lim = None, size = 200, style = None):
+def context_plot(data, dims, x_metrix = 'Context Length', y_metrix = 'Peak Memory', title=None, x_title = None, y_title = None, x_lim = None, y_lim = None, size = 200, style = None, save_dir = None):
 
     model_names = dims['computing_model']
 
@@ -60,12 +60,19 @@ def context_plot(data, dims, x_metrix = 'Context Length', y_metrix = 'Peak Memor
         plt.title(title)
 
     plt.legend()
+
+
+    if save_dir is not None:
+        plt.savefig(save_dir)
+
+
     # Show the plot
     plt.show()
+    plt.close()
 
 
 
-def model_scatter(data, dims, x_axis_func, y_axis_func, title=None, x_lim = None, y_lim = None, size = 100, style = None):
+def model_scatter(data, dims, x_axis_func, y_axis_func, title=None, x_lim = None, y_lim = None, size = 100, style = None, save_dir = None):
     x, y = [], []
     model_names = dims['computing_model']
     model_idx = str_list_to_dict(model_names)
@@ -101,8 +108,14 @@ def model_scatter(data, dims, x_axis_func, y_axis_func, title=None, x_lim = None
         plt.title(title)
 
     plt.legend()
+
+
+    if save_dir is not None:
+        plt.savefig(save_dir)
+
     # Show the plot
     plt.show()
+    plt.close()
 
 
 # def comparison_histogram(dims, data):
