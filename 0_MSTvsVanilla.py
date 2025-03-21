@@ -35,16 +35,17 @@ context_plot(results, dims, title = 'Memory use vs. Context length', save_dir = 
 print('************************\n% tabel get_end2end_runtime')
 new_dims, new_results = get_metric(dims, results, get_end2end_runtime)
 tab_2d(new_dims, new_results)
-print()
+print('%**************************')
 
 print('************************\n% tabel First Token Delay')
 new_dims, new_results = get_metric(dims, results, 'First Token Delay')
 tab_2d(new_dims, new_results)
-print()
+print('%**************************')
 
 print('************************\n% tabel decode speed')
 new_dims, new_results = get_metric(dims, results, get_output_speed)
 tab_2d(new_dims, new_results)
+print('%**************************')
 
 
 def tab_memory_ratio(dims, data, float_format="%.3f"):
@@ -61,6 +62,7 @@ def tab_memory_ratio(dims, data, float_format="%.3f"):
     print(df.to_latex(float_format=float_format))
     return df
 
-print('************************\ntabel memory_ratio')
+print('************************\n%tabel memory_ratio')
 tab_memory_ratio(dims, results)
+print('%**************************')
 

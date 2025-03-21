@@ -54,16 +54,19 @@ context_plot(results, dims, title = 'Memory use vs. Context length', save_dir = 
 print('************************\n% tabel get_end2end_runtime')
 new_dims, new_results = get_metric(dims, results, get_end2end_runtime)
 tab_2d(new_dims, new_results)
-print()
+print('%**************************')
 
 print('************************\n% tabel First Token Delay')
 new_dims, new_results = get_metric(dims, results, 'First Token Delay')
 tab_2d(new_dims, new_results)
-print()
+print('%**************************')
+
+
 
 print('************************\n% tabel Decoding Time')
 new_dims, new_results = get_metric(dims, results, get_output_speed)
 tab_2d(new_dims, new_results)
+print('%**************************')
 
 
 
@@ -93,7 +96,8 @@ def offload_compare_MST_no_MST(dims, data, float_format="%.3f"):
     # print(df.to_latex(float_format=float_format))
     # return df
 
-print('************************\ntabel Speed comparison')
+print('************************\n%tabel Speed comparison')
 new_dims, new_results = get_metric(dims, results, 'Decoding Time')
 tab_2d(new_dims, new_results)
+print('%**************************')
 
