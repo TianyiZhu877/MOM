@@ -3,7 +3,7 @@ import torch
 from transformers.cache_utils import Cache, DynamicCache, StaticCache, OffloadedCache, OffloadedStaticCache
 
 class regularRecursive:
-    def __init__(self, max_new_tokens=500, cache = DynamicCache, stop_by_eos = False):
+    def __init__(self, max_new_tokens=200, cache = DynamicCache, stop_by_eos = False):
         self.past_key_values = cache()
         # self.eos_token_ids
         self.next_input = None
@@ -37,7 +37,7 @@ class regularRecursive:
 
 
 class decodeOnlyOffload:
-    def __init__(self, max_new_tokens=500, cache = None, stop_by_eos = False):
+    def __init__(self, max_new_tokens=200, cache = None, stop_by_eos = False):
         self.past_key_values = OffloadedCache()
         self.past_key_values.sink_size = 64
         self.past_key_values.recent_size = 256
@@ -86,7 +86,7 @@ class decodeOnlyOffload:
 
 
 class chunkPrefill:
-    def __init__(self, chunk_size, max_new_tokens=500, cache = DynamicCache, stop_by_eos = False):
+    def __init__(self, chunk_size, max_new_tokens=200, cache = DynamicCache, stop_by_eos = False):
         self.chunk_size = chunk_size
         self.past_key_values = cache()
         # self.eos_token_ids
