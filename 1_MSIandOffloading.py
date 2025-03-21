@@ -26,17 +26,17 @@ contexts = {
 
 
 models = {
-    'vanilla': (lambda: general_model(model_ckpt, attn_implementation=None, MST=False),
+    'vanilla': (lambda: general_model(model_ckpt, MST=False),
                 lambda: regularRecursive()),
 
-    '(prefill only) Offload': (lambda: general_model(model_ckpt, attn_implementation=None, MST=False),
+    '(prefill only) Offload': (lambda: general_model(model_ckpt, MST=False),
                 lambda: decodeOnlyOffload()),
 
 
-    'MST': (lambda: general_model(model_ckpt, attn_implementation=None, MST=minisequence_inference),
+    'MSI': (lambda: general_model(model_ckpt, MST=minisequence_inference),
                 lambda: regularRecursive()),
 
-    'Offload + MST': (lambda: general_model(model_ckpt, attn_implementation=None, MST=minisequence_inference),
+    'Offload + MSI': (lambda: general_model(model_ckpt, MST=minisequence_inference),
                 lambda: decodeOnlyOffload()),
 
 }
@@ -50,16 +50,16 @@ context_plot(results, dims, title = 'Memory use vs. Context length', save_dir = 
 print('************************\n% tabel get_end2end_runtime')
 new_dims, new_results = get_metric(dims, results, get_end2end_runtime)
 tab_2d(new_dims, new_results)
-print('%**************************')
+# print('%**************************')
 
 print('************************\n% tabel First Token Delay')
 new_dims, new_results = get_metric(dims, results, 'First Token Delay')
 tab_2d(new_dims, new_results)
-print('%**************************')
+# print('%**************************')
 
-print('************************\n% tabel Decoding Time')
+print('************************\n% tabel Decode Speed')
 new_dims, new_results = get_metric(dims, results, get_output_speed)
-print('%**************************')
+# print('%**************************')
 
 
 
@@ -91,6 +91,6 @@ def offload_compare_MST_no_MST(dims, data, float_format="%.3f"):
 print('************************\n%tabel offload_compare_MST_no_MST')
 new_dims, new_results = offload_compare_MST_no_MST(dims, results)
 tab_2d(new_dims, new_results)
-print('%**************************')
+# print('%**************************')
 
 
