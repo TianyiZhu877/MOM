@@ -70,6 +70,7 @@ def run_single_test(context_generator, model_generator, runner_generator):
         t_start = time.time()
         t = runner.prefill(model, input_ids)
         t_after_prefill = time.time()
+        # print('runtime: ', t_after_prefill- t_start)
         if t is None:
             stats['First Token Delay'] = t_after_prefill - t_start
         else:

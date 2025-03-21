@@ -9,10 +9,10 @@ import importlib
 
 model_ckpt = "gradientai/Llama-3-8B-Instruct-Gradient-1048k"
 contexts = {
-    '48000': lambda tokenizer: needle_in_book(16000, tokenizer),
-    '80000': lambda tokenizer: needle_in_book(32000, tokenizer),
-    '112000': lambda tokenizer: needle_in_book(48000, tokenizer),
-    '144000': lambda tokenizer: needle_in_book(55000, tokenizer),
+    '48000': lambda tokenizer: needle_in_book(48000, tokenizer),
+    '80000': lambda tokenizer: needle_in_book(80000, tokenizer),
+    '112000': lambda tokenizer: needle_in_book(112000, tokenizer),
+    '144000': lambda tokenizer: needle_in_book(144000, tokenizer),
 }
 
 
@@ -47,18 +47,18 @@ dims, results = run_test(contexts, models)
 context_plot(results, dims, title = 'Memory use vs. Context length', save_dir = 'outputs/MSIandOffloading.png')
 
 
-print('************************\ntabel get_end2end_runtime')
+print('************************\n% tabel get_end2end_runtime')
 new_dims, new_results = get_metric(dims, results, get_end2end_runtime)
 tab_2d(new_dims, new_results)
 print()
 
-print('************************\ntabel get_end2end_runtime')
+print('************************\n% tabel First Token Delay')
 new_dims, new_results = get_metric(dims, results, 'First Token Delay')
 tab_2d(new_dims, new_results)
 print()
 
-print('************************\ntabel get_end2end_runtime')
-new_dims, new_results = get_metric(dims, results, 'Decoding Time')
+print('************************\n% tabel Decoding Time')
+new_dims, new_results = get_metric(dims, results, get_output_speed)
 tab_2d(new_dims, new_results)
 
 
