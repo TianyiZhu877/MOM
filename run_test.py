@@ -115,7 +115,7 @@ def run_test(contexts, models, print_answer=True, print_residual_mem = True, pri
             for i, metric in enumerate(metrics):
                 results[c_i, m_i, i] = stats[metric]
             if print_answer:
-                print(answer)
+                print('Response: ', answer)
             if print_stats:
                 print(stats)
             

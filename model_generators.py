@@ -16,7 +16,7 @@ standard_llama3_offload_device_map = {
 }
 
 
-def general_model(ckpt, MST: bool=False, device_map = None, attn_implementation="flash_attention_2"):
+def general_model(ckpt, MST=False, device_map = None, attn_implementation="flash_attention_2"):
     if device_map is not None:
         if attn_implementation is not None:
             model = AutoModelForCausalLM.from_pretrained(
@@ -49,9 +49,14 @@ def general_model(ckpt, MST: bool=False, device_map = None, attn_implementation=
                 low_cpu_mem_usage=True,
                 attn_implementation=attn_implementation,
             ).to("cuda")
-    
-    if MST:
-        model = minisequence(model)
+
+    if isinstance(MST, bool):
+        # legacy support for bool
+        if MST:
+            model = minisequence(model)
+    else:
+        model = MST(model)
+
         
     tokenizer = AutoTokenizer.from_pretrained(ckpt, use_fast=False)
     generation_config = GenerationConfig.from_pretrained(ckpt)

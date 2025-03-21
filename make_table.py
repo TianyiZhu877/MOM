@@ -6,6 +6,9 @@ from .run_test import metric_idx, str_list_to_dict
 def get_output_speed(data_metric):
     return data_metric[2]/data_metric[5]
 
+def get_end2end_runtime(data_metric):
+    return data_metric[4]+data_metric[5]
+
 
 def get_new_metrics(dims, data, new_metrics:dict):
     new_dims = dims
@@ -24,6 +27,17 @@ def get_new_metrics(dims, data, new_metrics:dict):
     return new_dims, new_data
             
 
+def get_metric(dims, data, remapping):
+    new_dims = {'context': dims['context'], 'computing_model': dims['computing_model']}
+    new_data =  np.zeros((len(new_dims['context']), len(new_dims['computing_model'])))
+    for c_i, context_name in enumerate(new_dims['context']):
+        for m_i, model_name in enumerate(new_dims['computing_model']):
+            if isinstance(remapping, str):
+                new_data[c_i, m_i] = data[c_i, m_i, metric_idx[remapping]]
+            else:
+                new_data[c_i, m_i] = remapping(data[c_i, m_i])
+
+    return new_dims, new_data
     
 
 def switch_dim_trim_3d(dims, data, order = (0,1,2), keep_idxes = None):
