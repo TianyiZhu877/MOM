@@ -13,7 +13,7 @@ def str_list_to_dict(str_list: list):
     return result
 
 metrics = ['Model size', 'Context Length', '#Output tokens', 'Peak Memory',  'First Token Delay', 'Decoding Time']
-metric_units = ['MB', '', '', 'MB', 's', 's']
+metric_units = ['MB', 'Tokens', 'Tokens', 'MB', 's', 's']
 
 metric_idx = str_list_to_dict(metrics)
 

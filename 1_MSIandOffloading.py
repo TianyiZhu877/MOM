@@ -59,6 +59,7 @@ tab_2d(new_dims, new_results)
 
 print('************************\n% tabel Decode Speed')
 new_dims, new_results = get_metric(dims, results, get_output_speed)
+tab_2d(new_dims, new_results)
 # print('%**************************')
 
 

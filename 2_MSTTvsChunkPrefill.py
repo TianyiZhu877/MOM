@@ -68,36 +68,3 @@ new_dims, new_results = get_metric(dims, results, get_output_speed)
 tab_2d(new_dims, new_results)
 # print('%**************************')
 
-
-
-
-def offload_compare_MST_no_MST(dims, data, float_format="%.3f"):
-    dim_names = list(dims.keys())
-    num_models = len(dims['computing_model'])
-    new_dims = dims.copy()
-
-
-    new_dims['computing_model'] = dims['computing_model'][:num_models//2]
-    # new_dims['metric'] = ['Memory MST / Memory without MST (%)']
-    # print(data[:, num_models//2 + 1:, 3], data[:, :num_models//2, 3])
-    data_new = data[:, num_models//2:, 3]/data[:, :num_models//2, 3]*100
-    # data_new = -data[:, num_models//2 + 1:, 3:4]+data[:, :num_models//2, 3:4]
-
-    # print(new_dims, data_new)
-    return new_dims, data_new
-    # df = pd.DataFrame(
-    #     data_new,
-    #     index=new_dims[dim_names[0]],
-    #     columns=['Memory MST / Memory without MST (%)']
-    # )
-
-
-    # df = df.T
-    # print(df.to_latex(float_format=float_format))
-    # return df
-
-print('************************\n%tabel Speed comparison')
-new_dims, new_results = get_metric(dims, results, 'Decoding Time')
-tab_2d(new_dims, new_results)
-# print('%**************************')
-
