@@ -46,10 +46,10 @@ models = {
 
 }
 
-
 dims, results = run_test(contexts, models)
 
 context_plot(results, dims, title = 'Memory use vs. Context length', save_dir = 'outputs/3_mem_curve.png')
 
-model_scatter(results, dims, get_avg_throughput, get_avg_mem_use_ratio, 'Memory saved ratio vs. Average throughput', y_lim = (40, 105), save_dir = 'outputs/3_MemorysavedratiovsAveragethroughput.png') #, style='darkgrid')
-
+x, y = model_scatter(results, dims, get_avg_throughput, get_avg_mem_use_ratio, 'Memory saved ratio vs. Average throughput', y_lim = (40, 105), save_dir = 'outputs/3_MemorysavedratiovsAveragethroughput.png') #, style='darkgrid')
+print('x = ', x)
+print('y = ', y)

@@ -112,10 +112,12 @@ def model_scatter(data, dims, x_axis_func, y_axis_func, title=None, x_lim = None
 
     if save_dir is not None:
         plt.savefig(save_dir)
-
+    
     # Show the plot
     plt.show()
     plt.close()
+
+    return x, y
 
 
 # def comparison_histogram(dims, data):
