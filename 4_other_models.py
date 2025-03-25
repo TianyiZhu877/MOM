@@ -6,17 +6,18 @@ from MST_experiment_utils import *
 import importlib
 
 
-model_ckpt = "gradientai/Llama-3-8B-Instruct-Gradient-1048k"
+model_ckpt = "Qwen/Qwen2.5-7B-Instruct-1M"
+# model_ckpt = "NousResearch/Yarn-Llama-2-7b-128k"
 contexts = {
-    '48000': lambda tokenizer: needle_in_book(48000, tokenizer),
-    '80000': lambda tokenizer: needle_in_book(80000, tokenizer),
-    '112000': lambda tokenizer: needle_in_book(112000, tokenizer),
-    '144000': lambda tokenizer: needle_in_book(144000, tokenizer),
+    '32000': lambda tokenizer: needle_in_book(32000, tokenizer),
+    '64000': lambda tokenizer: needle_in_book(64000, tokenizer),
+    '96000': lambda tokenizer: needle_in_book(96000, tokenizer),
+    '128000': lambda tokenizer: needle_in_book(128000, tokenizer),
 }
 
 
 
-# model_ckpt = "meta-llama/Llama-3.2-3B-Instruct"
+# model_ckpt = "Qwen/Qwen2.5-3B-Instruct"
 # contexts = {
 #     '12000': lambda tokenizer: needle_in_book(12000, tokenizer),
 #     '8000': lambda tokenizer: needle_in_book(8000, tokenizer),

@@ -43,7 +43,7 @@ class LlamaMLPInferenceWrapper(nn.Module):
         bsz, q_len, hidden_dim = x.size()
 
         # If this is the final MLP, slice out [B, 1, d] and skip chunking
-        if False and self.is_final_mlp:
+        if self.is_final_mlp:
             # Force the last token only
             x = x[..., -1:, :]  # shape = [B,1,d]
             # Now we just pass that single token to the underlying MLP
@@ -169,11 +169,14 @@ class minisequence_inference(nn.Module):
         self.module = module
         self._mlp_count = 0
         self._wrap_done = False
+        self._is_qwen = False
 
         self.mlp_types = (transformers.models.llama.modeling_llama.LlamaMLP,
-                          transformers.models.qwen2.modeling_qwen2.Qwen2MLP)
+                          transformers.models.qwen2.modeling_qwen2.Qwen2MLP,
+                          transformers.models.gemma3.modeling_gemma3.Gemma3MLP)
         self.casuallm_types = ( transformers.models.llama.modeling_llama.LlamaForCausalLM,
-                        transformers.models.qwen2.modeling_qwen2.Qwen2ForCausalLM)
+                        transformers.models.qwen2.modeling_qwen2.Qwen2ForCausalLM,
+                        transformers.models.gemma3.modeling_gemma3.Gemma3ForCausalLM)
         
         # We might find how many MLPs total are in the model to detect the final MLP 
         self.total_mlps = self._count_mlps(module)
@@ -191,6 +194,7 @@ class minisequence_inference(nn.Module):
 
         is_llama_mlp = isinstance(module, self.mlp_types)
         is_llama_causallm = isinstance(module, self.casuallm_types)
+        self._is_qwen = self._is_qwen or isinstance(module, transformers.models.qwen2.modeling_qwen2.Qwen2ForCausalLM)
         has_children = any(isinstance(child, nn.Module) for child in module.children())
 
         if has_children and not is_llama_mlp:
@@ -201,7 +205,7 @@ class minisequence_inference(nn.Module):
             self._mlp_count += 1
             # print(f'mlp layer {self._mlp_count}')
             # If it's not the last MLP, wrap with MST
-            if self._mlp_count < self.total_mlps:
+            if (self._mlp_count < self.total_mlps) or self._is_qwen:
                 wrapped = LlamaMLPInferenceWrapper(module, is_final_mlp=False)
             else:
                 # This is the last MLP
