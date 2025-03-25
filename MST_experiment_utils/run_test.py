@@ -17,7 +17,7 @@ metric_units = ['MB', 'Tokens', 'Tokens', 'MB', 's', 's']
 
 metric_idx = str_list_to_dict(metrics)
 
-def cuda_cleanup(print_residual_mem = False, device = 0, mem_threshold = 32*(2**20)):
+def cuda_cleanup(print_residual_mem = False, device = 0, mem_threshold = 64*(2**20)):
     gc.collect()
     torch.cuda.empty_cache()
 
