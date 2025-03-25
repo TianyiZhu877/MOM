@@ -25,45 +25,7 @@ def general_model(ckpt, MST=False, device_map = None, quantization = None, attn_
     if quantization is not None:
         args['quantization_config'] = quantization
 
-    model = AutoModelForCausalLM.from_pretrained(ckpt, torch_dtype=torch.bfloat16, low_cpu_mem_usage=True, **args)
-    # args = {
-    #     ckpt,
-    #     torch_dtype=torch.bfloat16,
-    #     low_cpu_mem_usage=True,
-    #     attn_implementation=attn_implementation,
-    # }
-    # if device_map is not None:
-    #     if attn_implementation is not None:
-    #         model = AutoModelForCausalLM.from_pretrained(
-    #             ckpt,
-    #             torch_dtype=torch.bfloat16,
-    #             low_cpu_mem_usage=True,
-    #             device_map = device_map,
-    #             attn_implementation=attn_implementation,
-    #         )
-    #     else:
-    #         model = AutoModelForCausalLM.from_pretrained(
-    #             ckpt,
-    #             torch_dtype=torch.bfloat16,
-    #             low_cpu_mem_usage=True,
-    #             device_map = device_map,
-    #             attn_implementation=attn_implementation,
-    #         )
-    # else:
-    #     if attn_implementation is not None:
-    #         model = AutoModelForCausalLM.from_pretrained(
-    #             ckpt,
-    #             torch_dtype=torch.bfloat16,
-    #             low_cpu_mem_usage=True,
-    #             attn_implementation=attn_implementation,
-    #         ).to("cuda")
-    #     else:
-    #         model = AutoModelForCausalLM.from_pretrained(
-    #             ckpt,
-    #             torch_dtype=torch.bfloat16,
-    #             low_cpu_mem_usage=True,
-    #             attn_implementation=attn_implementation,
-    #         ).to("cuda")
+    model = AutoModelForCausalLM.from_pretrained(ckpt, torch_dtype=torch.bfloat16, low_cpu_mem_usage=True, **args).to("cuda")
 
     if isinstance(MST, bool):
         # legacy support for bool
