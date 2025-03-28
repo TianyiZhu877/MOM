@@ -1,8 +1,8 @@
 import transformers
 import torch
 from transformers.cache_utils import Cache, DynamicCache, StaticCache, OffloadedCache, OffloadedStaticCache
-from MST_experiment_utils.MSI import minisequence_inference
-from MST_experiment_utils import *
+from MSI_experiment_utils.MSI import minisequence_inference
+from MSI_experiment_utils import *
 import importlib
 
 

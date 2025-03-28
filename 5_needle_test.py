@@ -1,8 +1,8 @@
 import transformers
 import torch
 from transformers.cache_utils import Cache, DynamicCache, StaticCache, OffloadedCache, OffloadedStaticCache
-from MST_experiment_utils.MSI import minisequence_inference
-from MST_experiment_utils import *
+from MSI_experiment_utils.MSI import minisequence_inference
+from MSI_experiment_utils import *
 import importlib
 
 
@@ -25,15 +25,15 @@ placements = [0, 0.25, 0.5, 0.75, 1]
 if model == "MOM":
     model_generator = lambda: general_model(model_ckpt, MST=minisequence_inference, quantization = quantization_config)
     runner_generator = lambda:  decodeOnlyOffload(max_new_tokens=100, stop_by_eos = True)
-    # max_context = 24000
-    max_context = 450000
+    max_context = 24000
+    # max_context = 450000
 
 
 if model == "standard":
     model_generator = lambda: general_model(model_ckpt, MST=False, quantization = quantization_config)
     runner_generator = lambda: regularRecursive(stop_by_eos = True, max_new_tokens=100)
-    # max_context = 12000
-    max_context = 150000
+    max_context = 12000
+    # max_context = 150000
 
 results = run_needle_test(needleInBook, model_generator, runner_generator, context_lens, placements, max_context)
 
