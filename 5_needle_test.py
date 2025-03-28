@@ -15,25 +15,26 @@ model_ckpt = "gradientai/Llama-3-8B-Instruct-Gradient-1048k"
 # )
 quantization_config = None
 
-
+model = "MOM"
+# model = "standard"
 
 # context_lens = [6000, 12000, 18000, 24000]
 context_lens = [5000, 10000, 15000, 20000, 25000, 30000, 35000]
 placements = [0, 0.25, 0.5, 0.75, 1]
 
-name = 'MOM'
-model_generator = lambda: general_model(model_ckpt, MST=minisequence_inference, quantization = quantization_config)
-runner_generator = lambda:  decodeOnlyOffload(max_new_tokens=100, stop_by_eos = True)
-# max_context = 24000
-max_context = 350000
+if model == "MOM":
+    model_generator = lambda: general_model(model_ckpt, MST=minisequence_inference, quantization = quantization_config)
+    runner_generator = lambda:  decodeOnlyOffload(max_new_tokens=100, stop_by_eos = True)
+    # max_context = 24000
+    max_context = 450000
 
 
-# name = 'standard'
-# model_generator = lambda: general_model(model_ckpt, MST=False, quantization = quantization_config)
-# runner_generator = lambda: regularRecursive(stop_by_eos = True, max_new_tokens=100)
-# max_context = 12000
-# max_context = 145000
+if model == "standard":
+    model_generator = lambda: general_model(model_ckpt, MST=False, quantization = quantization_config)
+    runner_generator = lambda: regularRecursive(stop_by_eos = True, max_new_tokens=100)
+    # max_context = 12000
+    max_context = 150000
 
 results = run_needle_test(needleInBook, model_generator, runner_generator, context_lens, placements, max_context)
 print(results)
-np.save("outputs/5_results_"+name+".npy", results)
+np.save("outputs/5_results_"+model+".npy", results)
