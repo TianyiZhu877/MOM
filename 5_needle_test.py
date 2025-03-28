@@ -18,8 +18,8 @@ quantization_config = None
 # model = "MOM"
 model = "standard"
 
-# context_lens = [6000, 12000, 18000, 24000]
-context_lens = [50000, 100000, 150000, 200000, 250000, 300000, 350000]
+context_lens = [6000, 12000, 18000, 24000]
+# context_lens = [5000, 10000, 15000, 20000, 25000, 30000, 35000]
 placements = [0, 0.25, 0.5, 0.75, 1]
 
 if model == "MOM":
@@ -36,5 +36,7 @@ if model == "standard":
     max_context = 150000
 
 results = run_needle_test(needleInBook, model_generator, runner_generator, context_lens, placements, max_context)
-print(results)
+
 np.save("outputs/5_results_"+model+".npy", results)
+graph_needle_test(results, context_lens, placements, 'output/standard.svg')
+

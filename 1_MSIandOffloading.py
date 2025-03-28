@@ -26,17 +26,17 @@ contexts = {
 
 
 models = {
-    'vanilla': (lambda: general_model(model_ckpt, MST=False),
+    'Standard': (lambda: general_model(model_ckpt, MST=False),
                 lambda: regularRecursive()),
 
     '(prefill only) Offload': (lambda: general_model(model_ckpt, MST=False),
                 lambda: decodeOnlyOffload()),
 
 
-    'MSI': (lambda: general_model(model_ckpt, MST=minisequence_inference),
+    'Mini-sequence': (lambda: general_model(model_ckpt, MST=minisequence_inference),
                 lambda: regularRecursive()),
 
-    'Offload + MSI': (lambda: general_model(model_ckpt, MST=minisequence_inference),
+    'MOM (Offload + Mini-sequence)': (lambda: general_model(model_ckpt, MST=minisequence_inference),
                 lambda: decodeOnlyOffload()),
 
 }
@@ -44,8 +44,8 @@ models = {
 
 dims, results = run_test(contexts, models)
 
-context_plot(results, dims, title = 'Memory use vs. Context length', save_dir = 'outputs/MSIandOffloading.png')
-
+context_plot(results, dims, save_dir = 'outputs/mem_curve_offload.svg')
+# , title = 'Memory use vs. Context length'
 
 print('************************\n% tabel get_end2end_runtime')
 new_dims, new_results = get_metric(dims, results, get_end2end_runtime)
@@ -94,4 +94,5 @@ new_dims, new_results = offload_compare_MST_no_MST(dims, results)
 tab_2d(new_dims, new_results)
 # print('%**************************')
 
+print(dims, results)
 
