@@ -18,7 +18,7 @@ def get_avg_mem_use_ratio(data, ref):
 #     return np.mean(data[3])
 
 
-def context_plot(data, dims, x_metrix = 'Context Length', y_metrix = 'Peak Memory', title=None, x_title = None, y_title = None, x_lim = None, y_lim = None, size = 200, style = None):
+def context_plot(data, dims, x_metrix = 'Context Length', y_metrix = 'Peak Memory', title=None, x_title = None, y_title = None, x_lim = None, y_lim = None, size = 200, style = None, save_dir = None):
 
     model_names = dims['computing_model']
 
@@ -60,12 +60,19 @@ def context_plot(data, dims, x_metrix = 'Context Length', y_metrix = 'Peak Memor
         plt.title(title)
 
     plt.legend()
+
+
+    if save_dir is not None:
+        plt.savefig(save_dir)
+
+
     # Show the plot
     plt.show()
+    plt.close()
 
 
 
-def model_scatter(data, dims, x_axis_func, y_axis_func, title=None, x_lim = None, y_lim = None, size = 100, style = None):
+def model_scatter(data, dims, x_axis_func, y_axis_func, title=None, x_lim = None, y_lim = None, size = 100, style = None, save_dir = None):
     x, y = [], []
     model_names = dims['computing_model']
     model_idx = str_list_to_dict(model_names)
@@ -101,11 +108,65 @@ def model_scatter(data, dims, x_axis_func, y_axis_func, title=None, x_lim = None
         plt.title(title)
 
     plt.legend()
+
+
+    if save_dir is not None:
+        plt.savefig(save_dir)
+    
     # Show the plot
     plt.show()
+    plt.close()
+
+    return x, y
 
 
 # def comparison_histogram(dims, data):
+def graph_needle_test(grid, context_lens , placements, save_dir = None, legend:bool = True):
+
+  # Define colors: 0 -> red, 1 -> green
+  colors = ['#F0496E', '#0CD79F']
+  cmap = mcolors.ListedColormap(colors)
+  figsize=(20,20)
+  if legend:
+    figsize = (30,30)
+  plt.figure(figsize=figsize)
+  plt.imshow(grid, cmap=cmap, origin='upper', interpolation='nearest')
+
+  plt.grid(which='both', color='grey', linestyle='-', linewidth=1)
+
+  plt.rcParams.update({
+      'font.size': 40,
+      'axes.titlesize': 70,
+      'axes.labelsize': 70,
+      'xtick.labelsize': 70,
+      'ytick.labelsize': 70
+  })
+
+  plt.xlabel("Context Length (K tokens)")
+  plt.ylabel("Needle Depth (%)")
+
+  placements = np.array(placements)*100
+  num_rows, num_cols = grid.shape
+  plt.xticks(np.arange(num_cols)-0.5, labels=context_lens)
+  plt.yticks(np.arange(num_rows)-0.5, labels=placements)
+  plt.gca().set_aspect(0.8)
+  if legend:
+    plt.gca().set_aspect(0.8)
+
+  red_patch = mpatches.Patch(color=colors[0], label='Incorrect\nScore = 0')
+  green_patch = mpatches.Patch(color=colors[1], label='Correct\nScore = 100')
+
+  if legend:
+    plt.legend(handles=[red_patch, green_patch], loc="upper left", bbox_to_anchor=(1, 1))
+
+  plt.tight_layout()
+
+  if save_dir is not None:
+      plt.savefig(save_dir)
+
+
+  plt.show()
+
 
 
 if __name__ == '__main__':

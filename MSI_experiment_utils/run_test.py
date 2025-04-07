@@ -13,11 +13,11 @@ def str_list_to_dict(str_list: list):
     return result
 
 metrics = ['Model size', 'Context Length', '#Output tokens', 'Peak Memory',  'First Token Delay', 'Decoding Time']
-metric_units = ['MB', '', '', 'MB', 's', 's']
+metric_units = ['MB', 'Tokens', 'Tokens', 'MB', 's', 's']
 
 metric_idx = str_list_to_dict(metrics)
 
-def cuda_cleanup(print_residual_mem = False, device = 0, mem_threshold = 32*(2**20)):
+def cuda_cleanup(print_residual_mem = False, device = 0, mem_threshold = 64*(2**20)):
     gc.collect()
     torch.cuda.empty_cache()
 
@@ -70,6 +70,7 @@ def run_single_test(context_generator, model_generator, runner_generator):
         t_start = time.time()
         t = runner.prefill(model, input_ids)
         t_after_prefill = time.time()
+        # print('runtime: ', t_after_prefill- t_start)
         if t is None:
             stats['First Token Delay'] = t_after_prefill - t_start
         else:
