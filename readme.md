@@ -37,7 +37,7 @@
 pip install -r requirements.txt 
 ```
 
-**[Checkout the notebook for 𝗠𝗢𝗠]()**
+**[Checkout the notebook for 𝗠𝗢𝗠](https://github.com/TianyiZhu877/MOM/blob/master/MOM_tests.ipynb)**
 
 Or run the python scripts in this directory for comparison between different configuration, and visualize the results
 
