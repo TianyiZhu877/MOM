@@ -4,7 +4,7 @@
 
 **Memory-efficient Offloaded Mini-sequence Inference (𝗠𝗢𝗠)  partitions critical layers into smaller "mini-sequences" and integrates seamlessly with KV cache offloading.**
 
-<img src=".\doc\images\MSIAch.png" width="200"/>   <img src=".\doc\images\memory_speed_tradeoff.png" width="400"/>
+<img src=".\doc\images\MSIAch.png" width="240"/>   <img src=".\doc\images\memory_speed_tradeoff.png" width="480"/>
 
 
 
