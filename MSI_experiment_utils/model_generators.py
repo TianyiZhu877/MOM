@@ -1,6 +1,6 @@
 import transformers
 import torch
-from minis.mini_sequence import minisequence
+from MSI_experiment_utils.MSI import minisequence_inference
 from transformers import AutoTokenizer, AutoModelForCausalLM, GenerationConfig
 
 standard_llama3_offload_device_map = {
@@ -30,7 +30,7 @@ def general_model(ckpt, MST=False, device_map = None, quantization = None, attn_
     if isinstance(MST, bool):
         # legacy support for bool
         if MST:
-            model = minisequence(model)
+            model = minisequence_inference(model)
     else:
         model = MST(model)
 
